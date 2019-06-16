@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+    <form>
+        <input type="number" name="userNumber">
+        <input type="submit">
+    </form>
+    <div style="padding: 20px; background:
+    {% if userNumber is empty %}
+            yellow
+    {% else %}
+        {% if userNumber == number %}
+            green
+        {% else %}
+            red
+        {% endif %}
+    {% endif %}
+            ;">
+        {{ number }}
+    </div>
+{% endblock %}
