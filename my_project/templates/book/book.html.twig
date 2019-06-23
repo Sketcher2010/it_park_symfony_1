@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BookController!{% endblock %}
+
+{% block body %}
+    <div>id: {{ book.id }}</div>
+    <div>название: {{ book.title }}</div>
+    <div>Кол-во страниц: {{ book.pagesCount }}</div>
+    <div>цена: {{ book.price }}</div>
+{% endblock %}

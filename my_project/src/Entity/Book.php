@@ -26,6 +26,16 @@ class Book
      */
     private $pagesCount;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $price;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ShopUser", inversedBy="books")
+     */
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +61,30 @@ class Book
     public function setPagesCount(int $pagesCount): self
     {
         $this->pagesCount = $pagesCount;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?ShopUser
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?ShopUser $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
