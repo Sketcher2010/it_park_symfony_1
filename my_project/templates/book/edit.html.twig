@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Hello BookController!{% endblock %}
+
+{% block body %}
+    {{ form(form) }}
+    <div class="btn btn-danger" onclick="deleteBook();">Удалить</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function deleteBook() {
+            $.post("{{ path("delete_book", {'book': book.id}) }}", {}, function (data) {
+                if(data.status === "success") {
+                    alert("Успешное удалине!");
+                } else {
+                    alert("Что-то пошло не так");
+                }
+            });
+        }
+    </script>
+{% endblock %}

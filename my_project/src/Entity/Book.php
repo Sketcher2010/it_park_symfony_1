@@ -36,6 +36,11 @@ class Book
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isDelete;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class Book
     public function setAuthor(?ShopUser $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getIsDelete(): ?bool
+    {
+        return $this->isDelete;
+    }
+
+    public function setIsDelete(?bool $isDelete): self
+    {
+        $this->isDelete = $isDelete;
 
         return $this;
     }

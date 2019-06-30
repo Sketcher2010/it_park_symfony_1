@@ -27,7 +27,69 @@ class BookController extends AbstractController
     {
         return $this->render(
             'book/book.html.twig',
-            ["book" => $book]
+            [
+                "book" => $book,
+                "user" => $this->getUser()
+            ]
+        );
+    }
+
+    /**
+     * @Route("/book/edit/{book}", requirements={"book"="\d+"}, name="book_edit")
+     * @param Book $book
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function bookEdit(Book $book, Request $request) {
+        $form = $this
+            ->createFormBuilder($book)
+            ->add('title', TextType::class, [
+                'required' => true,
+                'label' => 'Название книги',
+                'attr' => [
+                    'placeholder' => 'Моя книга 1'
+                ]
+            ])
+            ->add('author', EntityType::class, [
+                'label' => "Автор",
+                'required' => true,
+                'class' => ShopUser::class,
+                'choice_label' => 'email'
+            ])
+            ->add('pages_count', IntegerType::class, [
+                'required' => true,
+                'label' => 'Количество страниц книги',
+                'attr' => [
+                    'placeholder' => '999'
+                ]
+            ])
+            ->add('price', MoneyType::class, [
+                'required' => true,
+                'label' => 'Стоимость книги',
+                'attr' => [
+                    'placeholder' => '500'
+                ]
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => "Сохарнить"
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() and $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($book);
+            $manager->flush();
+            return new RedirectResponse('/');
+        }
+
+        return $this->render(
+            'book/edit.html.twig',
+            [
+                "form" => $form->createView(),
+                "book" => $book
+            ]
         );
     }
 
@@ -39,7 +101,24 @@ class BookController extends AbstractController
         $repository = $this
             ->getDoctrine()
             ->getRepository(Book::class);
-        $books = $repository->findAll();
+        $books = $repository->findBy(["isDelete" => false]);
+
+        return $this->render(
+            'book/list.html.twig',
+            ["books" => $books]
+        );
+    }
+
+    /**
+     * @Route("/own", name="own_books")
+     */
+    public function ownBooks()
+    {
+        $repository = $this
+            ->getDoctrine()
+            ->getRepository(Book::class);
+
+        $books = $repository->findBy(["author" => $this->getUser()]);
 
         return $this->render(
             'book/list.html.twig',
@@ -103,6 +182,7 @@ class BookController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() and $form->isValid()) {
+            $book->setIsDelete(false);
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($book);
             $manager->flush();
@@ -113,5 +193,22 @@ class BookController extends AbstractController
             'book/create.html.twig',
             ["form" => $form->createView()]
         );
+    }
+
+
+    /**
+     * @Route("/book/edit/{book}/delete", requirements={"book"="\d+"}, name="delete_book", methods={"POST"})
+     * @param Book $book
+     * @return Response
+     */
+    public function deleteBook(Book $book) {
+
+        $manager = $this->getDoctrine()->getManager();
+        $book->setIsDelete(true);
+        $manager->persist($book);
+        $manager->flush();
+
+        $arr = ["status" => "success"];
+        return $this->json($arr);
     }
 }

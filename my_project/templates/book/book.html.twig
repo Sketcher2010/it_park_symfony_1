@@ -7,4 +7,11 @@
     <div>название: {{ book.title }}</div>
     <div>Кол-во страниц: {{ book.pagesCount }}</div>
     <div>цена: {{ book.price }}</div>
+    {% if book.author == user or is_granted('ROLE_ADMIN_USER') %}
+        <div>
+            <a href="{{ path('book_edit', {'book': book.id}) }}">
+                Редактировать
+            </a>
+        </div>
+    {% endif %}
 {% endblock %}
