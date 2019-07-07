@@ -1,38 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="/js/all.js"></script>
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <style>
-            .alerts {
-                display: none;
-            }
-            .class {
-                padding: 20px;
-                background: red;
-            }
-            .loader {
-                position:fixed;
-                background: #ffffff;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                display: flex;
-                justify-content: center;
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/js/all.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <style>
+        .alerts {
+            display: none;
+        }
 
-            }
-        </style>
-    </head>
-    <body>
-    <div class="alerts">
+        .class {
+            padding: 20px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+{% block modals %}{% endblock %}
+<div class="alerts">
     <div class="alert class"></div>
 </div>
-<div class="loader">Загрузка страницы</div>
 <div class="container">
     <div class="row"></div>
     <div class="row">

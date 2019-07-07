@@ -2,12 +2,47 @@
 
 {% block title %}Список книг{% endblock %}
 
-{% block body %}
-    {% for book in books %}
-        <div>
-            <a href="{{ path('book_page', {'book': book.id}) }}">
-                {{ book.title }}
-            </a>
+{% block modals %}
+    <div id="modalBackgroud" onclick="hideModal()"></div>
+    <template id="bookModalTemplate">
+        <div class="modal-wrapper">
+            <div class="my-modal">
+                <div class="modal-title">
+                    {title}
+                </div>
+                <div class="modal-content">
+                    {content}
+                </div>
+                <div class="modal-actions">
+                    {buttons}
+                </div>
+            </div>
         </div>
-    {% endfor %}
+    </template>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        {% for book in books %}
+
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ book.price }}</h6>
+                        {#<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+                        <a href="#" onclick="showBook({{ book.id }})" class="card-link">Посмотреть полностью товар</a>
+                        <div onclick="addToFavourite({{ book.id }})" class="btn btn-primary">Добавить в избранное</div>
+                    </div>
+                </div>
+            </div>
+
+            {#<div>#}
+            {#<a href="{{ path('book_page', {'book': book.id}) }}">#}
+            {#{{ book.title }}#}
+            {#</a>#}
+            {#</div>#}
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -211,4 +211,27 @@ class BookController extends AbstractController
         $arr = ["status" => "success"];
         return $this->json($arr);
     }
+
+    /**
+     * @Route("/books/{book}.json", requirements={"book"="\d+"}, name="book_page")
+     * @param Book $book
+     * @return Response
+     */
+    public function getJsonBook(Book $book)
+    {
+        return $this->json($book);
+    }
+
+    /**
+     * @Route("/books/add_to_favourite/{book}", requirements={"book"="\d+"}, name="book_to_favourite")
+     * @param Book $book
+     * @return Response
+     */
+    public function addBookToFavourite(Book $book)
+    {
+        setcookie("favourite", $book->getId(), 60*60*24*365);
+        return $this->json(["status" => "success"]);
+    }
+
+
 }

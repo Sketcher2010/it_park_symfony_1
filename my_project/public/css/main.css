@@ -1,0 +1,28 @@
+#modalBackgroud {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+    display: none;
+}
+
+.modal-wrapper {
+    position: fixed;
+    z-index: 101;
+    width: 500px;
+    left: calc(50% - 250px);
+    top: 50px;
+    background: #ffffff;
+    padding: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.blur {
+    filter: blur(5px);
+    transition: all 500ms;
+}
