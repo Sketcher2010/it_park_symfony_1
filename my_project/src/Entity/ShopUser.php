@@ -44,9 +44,12 @@ class ShopUser implements UserInterface
      */
     private $books;
 
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
+//        $this->chatMessages = new ArrayCollection();
+//        $this->inboxMessages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,6 +157,68 @@ class ShopUser implements UserInterface
                 $book->setAuthor(null);
             }
         }
+
+//        return $this;
+//    }
+//
+//    /**
+//     * @return Collection|ChatMessage[]
+//     */
+//    public function getChatMessages(): Collection
+//    {
+//        return $this->chatMessages;
+//    }
+//
+//    public function addChatMessage(ChatMessage $chatMessage): self
+//    {
+//        if (!$this->chatMessages->contains($chatMessage)) {
+//            $this->chatMessages[] = $chatMessage;
+//            $chatMessage->setAuthor($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeChatMessage(ChatMessage $chatMessage): self
+//    {
+//        if ($this->chatMessages->contains($chatMessage)) {
+//            $this->chatMessages->removeElement($chatMessage);
+//            // set the owning side to null (unless already changed)
+//            if ($chatMessage->getAuthor() === $this) {
+//                $chatMessage->setAuthor(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * @return Collection|ChatMessage[]
+//     */
+//    public function getInboxMessages(): Collection
+//    {
+//        return $this->inboxMessages;
+//    }
+//
+//    public function addInboxMessage(ChatMessage $inboxMessage): self
+//    {
+//        if (!$this->inboxMessages->contains($inboxMessage)) {
+//            $this->inboxMessages[] = $inboxMessage;
+//            $inboxMessage->setDistenation($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeInboxMessage(ChatMessage $inboxMessage): self
+//    {
+//        if ($this->inboxMessages->contains($inboxMessage)) {
+//            $this->inboxMessages->removeElement($inboxMessage);
+//            // set the owning side to null (unless already changed)
+//            if ($inboxMessage->getDistenation() === $this) {
+//                $inboxMessage->setDistenation(null);
+//            }
+//        }
 
         return $this;
     }
