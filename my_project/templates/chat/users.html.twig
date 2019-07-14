@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Чат с поддержкой{% endblock %}
+
+{% block body %}
+    {% for user in users %}
+        {% if user.id != currentUserId %}
+            <a href="{{ path('chat_with_user', {'user': user.id}) }}">{{ user.email }}</a>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

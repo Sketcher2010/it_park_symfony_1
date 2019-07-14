@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Чат с пользователем{% endblock %}
+
+{% block body %}
+    <div class="messages"></div>
+    <input type="text" id="userMessage">
+    <button onclick="sendMessage();">Отправить</button>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            loadMessages();
+        });
+        let lastMessageId = 0;
+
+        function loadMessages() {
+            $.get("{{ path('get_messages_with_user', {'user': destination.id}) }}",
+                {lastMessageId: lastMessageId},
+                function (responce) {
+                    if(responce.status === "success") {
+                        let messages = responce.messages;
+                        for(let i = 0; i < messages.length; i++) {
+                            $(".messages").html($(".messages").html() + "<hr>" + messages[i]["message"]);
+                        }
+                        lastMessageId = messages[messages.length - 1]["id"];
+                    }
+
+                    loadMessages();
+                });
+        }
+    </script>
+{% endblock %}

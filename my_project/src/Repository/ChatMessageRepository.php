@@ -49,5 +49,18 @@ class ChatMessageRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function findLastMessagesWithUser($lastMessageId, ShopUser $user, ShopUser $currentUser)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id > :lastMessageId')
+            ->andWhere('c.distenation = :currentUser')
+            ->andWhere('c.author = :user')
+            ->setParameter('lastMessageId', $lastMessageId)
+            ->setParameter('user', $user)
+            ->setParameter('currentUser', $currentUser)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 }
