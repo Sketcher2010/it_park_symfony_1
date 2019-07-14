@@ -8,6 +8,7 @@ use App\Repository\ChatMessageRepository;
 use App\Repository\ShopUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ChatController extends AbstractController
@@ -95,5 +96,30 @@ class ChatController extends AbstractController
         }
         return $this->json(["status" => "failed"]);
 
+    }
+
+    /**
+     * @Route("/support/send_message", name="send_message")
+     * @param Request $request
+     * @param ShopUserRepository $repository
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function sendMessage(Request $request, ShopUserRepository $repository) {
+        $author = $this->getUser();
+        $distenation = $repository->find($request->request->get("distenation"));
+        $message = $request->request->get("message");
+        $time = new \DateTime();
+        $manager = $this->getDoctrine()->getManager();
+
+        $newMessage = new ChatMessage();
+        $newMessage->setMessage($message);
+        $newMessage->setAuthor($author);
+        $newMessage->setDistenation($distenation);
+        $newMessage->setCreatedAt($time);
+
+        $manager->persist($newMessage);
+        $manager->flush();
+
+        return $this->json(["status" => "success"]);
     }
 }

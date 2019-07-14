@@ -30,5 +30,25 @@
                     loadMessages();
                 });
         }
+
+        function sendMessage() {
+            let message = $("#userMessage").val();
+            if(message.length < 10) {
+                alert("Минимальная длина сообщения - 10 символов!");
+                return;
+            }
+
+            $.post("{{ path("send_message") }}", {
+                message: message,
+                distenation: {{ destination.id }}
+            }, function (responce) {
+                if(responce.status === "success") {
+                    $(".messages").html($(".messages").html() + "<hr>" + message);
+                    $("#userMessage").val("");
+                } else {
+                    alert("Что-то пошло не так!");
+                }
+            });
+        }
     </script>
 {% endblock %}

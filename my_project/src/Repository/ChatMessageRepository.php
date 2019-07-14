@@ -40,27 +40,31 @@ class ChatMessageRepository extends ServiceEntityRepository
 
     public function findLastMessages($lastMessageId, ShopUser $user)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.id > :lastMessageId')
-            ->andWhere('c.distenation = :user')
-            ->setParameter('lastMessageId', $lastMessageId)
-            ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult()
-        ;
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery("SELECT c FROM App\Entity\ChatMessage c
+            where (c.author = :user or c.distenation = :user)
+            and c.id > :lastMessageId");
+        return $query->execute([
+            "lastMessageId" => $lastMessageId,
+            "user" => $user
+        ]);
     }
     public function findLastMessagesWithUser($lastMessageId, ShopUser $user, ShopUser $currentUser)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.id > :lastMessageId')
-            ->andWhere('c.distenation = :currentUser')
-            ->andWhere('c.author = :user')
-            ->setParameter('lastMessageId', $lastMessageId)
-            ->setParameter('user', $user)
-            ->setParameter('currentUser', $currentUser)
-            ->getQuery()
-            ->getResult()
-        ;
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery("SELECT c FROM App\Entity\ChatMessage c
+            where ((c.author = :user and c.distenation = :currentUser)
+            or
+                  (c.author = :currentUser and c.distenation = :user))
+                  and c.id > :lastMessageId");
+        return $query->execute([
+            "lastMessageId" => $lastMessageId,
+            "user" => $user,
+            "currentUser" => $currentUser
+        ]);
+
     }
 
 }
