@@ -29,11 +29,33 @@ function hideModal() {
 }
 
 function addToFavourite(bookId) {
-    $.get("/books/add_to_favourite/" + bookId, {}, function(result) {
-        if(result.status === "success") {
+    $.get("/books/add_to_favourite/" + bookId, {}, function (result) {
+        if (result.status === "success") {
             alert("Добавиили");
         } else {
             alert("Все плохо!");
+        }
+    });
+}
+
+
+function liveSearch() {
+    let q = $("#live-search").val();
+    let $searchResult = $(".searchResult");
+    if (q.length < 4) {
+        $searchResult.html("");
+        return;
+    }
+    $.get("/search", {q: q}, function (res) {
+
+        if (res.length === 0) {
+            $searchResult.html("Нет книг с таким названием!");
+        } else {
+            $searchResult.html("");
+            let n = res.length;
+            for (let i = 0; i < n; i++) {
+                $searchResult.html($searchResult.html() + res[i]['title'] + "<br>");
+            }
         }
     });
 }

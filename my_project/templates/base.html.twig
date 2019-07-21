@@ -40,15 +40,7 @@
             {% block body %}{% endblock %}
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="footer">
-                {% block footer %}
-                    Powered by Viktor (c) 2019
-                {% endblock %}
-            </div>
-        </div>
-    </div>
+    {% include "common/footer.html.twig" %}
 </div>
 {% block javascripts %}{% endblock %}
 </body>

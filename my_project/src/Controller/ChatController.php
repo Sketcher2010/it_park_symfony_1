@@ -18,14 +18,6 @@ class ChatController extends AbstractController
      */
     public function index()
     {
-//        $manager = $this->getDoctrine()->getManager();
-//        $message = new ChatMessage();
-//        $message->setAuthor($this->getUser());
-//        $message->setDistenation($this->getUser());
-//        $message->setCreatedAt(new \DateTime());
-//        $message->setMessage("Test message");
-//        $manager->persist($message);
-//        $manager->flush();
         return $this->render('chat/index.html.twig', [
             'controller_name' => 'ChatController',
         ]);
